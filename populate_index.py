@@ -1,5 +1,6 @@
 from elasticsearch import Elasticsearch
 import json
+import sys
 
 
 def populate_index(file_name, index_name, host=None):
@@ -49,5 +50,7 @@ def populate_index(file_name, index_name, host=None):
             print("ERROR: " + str(e))
     f.close()
 
-
-populate_index("tweet_location.txt", "tweet-index", ["https://search-jds797-gr2rzisoplktc2g7orat65jfci.us-west-2.es.amazonaws.com"])
+if len(sys.argv)<2:
+    print ("Usage:\n\npython populate_index.py <index_name> <host for elasticsearch>\nwhere replace <index_name> with the name of the index you want to create and replace <host for elasticsearch> with the Elastic Search Host url (pass an empty string (\"\") for localhost)\n")
+else:
+    populate_index("tweet_location.txt", sys.argv[1], None if sys.argv[2]=="" else [sys.argv[2]])

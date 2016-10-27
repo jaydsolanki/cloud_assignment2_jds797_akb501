@@ -2,6 +2,8 @@ branch-defaults:
   default:
     environment: null
     group_suffix: null
+  master:
+    environment: django-env
 global:
   application_name: cloud-assignment
   branch: null
@@ -10,4 +12,4 @@ global:
   default_region: us-west-2
   profile: null
   repository: null
-  sc: null
+  sc: git

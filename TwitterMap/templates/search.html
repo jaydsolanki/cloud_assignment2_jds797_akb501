@@ -97,8 +97,9 @@
                         }
 
                     },
-                    error: function () {
-                        alert("Failed");
+                    error: function(xhr, status, error) {
+                          var err = eval("(" + xhr.responseText + ")");
+                          alert(err.Message);
                     },
                     complete: function () {
                         $("#loading_modal").modal("hide");
@@ -181,8 +182,9 @@
                             }
 
                         },
-                        error: function () {
-                            alert("Failed");
+                        error: function(xhr, status, error) {
+                          var err = eval("(" + xhr.responseText + ")");
+                          alert(err.Message);
                         },
                         complete: function () {
                             $("#loading_modal").modal("hide");

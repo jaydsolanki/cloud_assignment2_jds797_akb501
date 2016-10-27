@@ -122,6 +122,6 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = 'static'
 
-INDEX_NAME = "tweet-index"
+INDEX_NAME = "twitter-index"
 
 HOST_NAME = ["https://search-jds797-gr2rzisoplktc2g7orat65jfci.us-west-2.es.amazonaws.com"]

@@ -50,14 +50,16 @@
      `tweet: string`
   4. Open `Assignment1/settings.py` and change the variables `INDEX_NAME` and `HOST_NAME` as per your configuration
   5. To run it locally, run
-     *`python manage.py runserver`
+     * `python manage.py runserver` <br/>
      The web appication will be accesible from `localhost:8000`
      <br> To run on ElasticBeanstalk make sure you have installed EB cli. Follow the steps from `http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html#python-django-deploy`.
      1. `eb init -p python2.7 cloud-assignment`
      2. `eb init`
      3. `eb create django-env`
      4. `eb open` <br/>
-     After the above steps the website will open
+     After the above steps the website will open at `http://django-env.m3txbp3s2c.us-west-2.elasticbeanstalk.com/`
+     <br/>
+     <strong> VERY IMPORTATNT NOTE: </strong> While doing `eb deploy` or `eb create django-env` it is <b> VERY IMPORTANT </b> to commit the changes made, otherwise new changes won't be deployed. Also dont forget to do `python manage.py collectstatic` if you add any new static files before commiting.
   6. For live tweets make sure you have your own Twitter
      1. `consumer_key`
      2. `consumer_secret`

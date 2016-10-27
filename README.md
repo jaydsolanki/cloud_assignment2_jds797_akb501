@@ -39,9 +39,15 @@
      * `python manage.py migrate`
   3. Make sure you have stated ElasticSearch service at localhost or at AWS. If you run on AWS make sure to get the url for accessing the elastic search. Then run
      * `python populate_index.py <index_name> <host for elasticsearch>`
+     <br/>
      where replace `<index_name>` with the name of the index you want to create and 
      replace `<host for elasticsearch>` with the Elastic Search Host url (pass an empty string ("") for localhost)
+     <br/>     
      This may take a while and after that your Elasticsearch index will be created and populated
+     <br/>
+     Schema used for Elasticsearch: <br>
+     `location: geo_point`<br/>
+     `tweet: string`
   4. Open `Assignment1/settings.py` and change the variables `INDEX_NAME` and `HOST_NAME` as per your configuration
   5. To run it locally, run
      *`python manage.py runserver`

@@ -1,0 +1,13 @@
+branch-defaults:
+  default:
+    environment: null
+    group_suffix: null
+global:
+  application_name: cloud-assignment
+  branch: null
+  default_ec2_keyname: jds797_bigdata
+  default_platform: python2.7
+  default_region: us-west-2
+  profile: null
+  repository: null
+  sc: null

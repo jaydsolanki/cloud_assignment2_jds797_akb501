@@ -94,3 +94,7 @@
 <br>
 
 ### Url for the Project on Beanstalk: `http://django-env.m3txbp3s2c.us-west-2.elasticbeanstalk.com/`
+
+<p>References </p>
+  1. Tweepy Example `http://adilmoujahid.com/posts/2014/07/twitter-analytics/`
+  2. Bootstrap Started Tempalte `http://getbootstrap.com/examples/starter-template/`

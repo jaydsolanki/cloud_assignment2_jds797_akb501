@@ -38,7 +38,6 @@ class StdOutListener(StreamListener):
                 lon = float(json_data['quoted_status']['place']['bounding_box']['coordinates'][0][0][0])
                 lat = float(json_data['quoted_status']['place']['bounding_box']['coordinates'][0][0][1])
             if lat and lon:
-                print (lat)
                 es.index(index=index_name, id=id, doc_type="tweet", body={"tweet": tweet, "location": {"lat": lat, "lon": lon}})
         except Exception as e:
             print("ERROR: " + str(e))
@@ -55,5 +54,5 @@ if __name__ == '__main__':
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
     index_name = sys.argv[1]
-    host = [sys.argv[2] if sys.argv[2]!="" else []
+    host = [sys.argv[2]] if sys.argv[2]!="" else []
     stream.filter(track=['starbucks','android','national geographic','pets','music'])

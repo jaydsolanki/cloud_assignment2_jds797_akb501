@@ -27,4 +27,4 @@ if __name__ == '__main__':
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
-    stream.filter(track=['starbucks','android','national geographic','pets','music'])
+    stream.filter(languages=['en'], track=['starbucks','android','national geographic','pets','music'])

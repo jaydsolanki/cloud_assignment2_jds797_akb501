@@ -55,4 +55,4 @@ if __name__ == '__main__':
     stream = Stream(auth, l)
     index_name = sys.argv[1]
     host = [sys.argv[2]] if sys.argv[2]!="" else []
-    stream.filter(track=['starbucks','android','national geographic','pets','music'])
+    stream.filter(languages=['en'], track=['starbucks','android','national geographic','pets','music'])

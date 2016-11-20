@@ -4,9 +4,14 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from tweepy.streaming import StreamListener
 import boto3
-
+from elasticsearch import Elasticsearch
 
 # Variables that contains the user credentials to access Twitter API
+# sudo pip install certifi
+# sudo pip install elasticsearch
+# sudo pip install tweepy
+# sudo pip isntall boto3
+# pip install awscli
 consumer_key='knSmWG4Quxx1J6d6fBjq8o6sC'
 consumer_secret='pGAfUp6fPL68x6RwsMrvSh68UkRJ0RXVpQDgqTgJAA8M2f0j8v'
 access_token='95882254-XdfWIqxNfuleqNG968qGGAn4bssQW5aiuDhKUab2r'
@@ -15,6 +20,26 @@ access_token_secret='zyPnWsNusGYZAFKKxTI6JzLVrjhkVn5xQGvnZbZRTsWKx'
 sqs = boto3.resource("sqs")
 queue = sqs.create_queue(QueueName='test', Attributes={"DelaySeconds":"5"})
 
+index_name = "twitter-index"
+mapping = {"mappings": {
+    "tweet": {
+        "properties": {
+            "tweet": {
+                "type": "string"
+            },
+            "location": {
+                "type": "geo_point"
+            },
+            "sentiment": {
+                "type": "string"
+            }
+        }
+    }
+}
+}
+host = ["https://search-jds797-gr2rzisoplktc2g7orat65jfci.us-west-2.es.amazonaws.com"]
+es = Elasticsearch(host)
+es.indices.create(index=index_name, body=mapping, ignore=400)
 
 # This is a listener that appends the tweet text, longitude and latitude to a csv file.
 class StdOutListener(StreamListener):
@@ -63,28 +88,4 @@ if __name__ == '__main__':
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
     stream.filter(languages=['en'], track=['starbucks','android','national geographic','pets','music'])
-    # a = 'starbucks is good. android is good. national geographic is good. pets is good. music is good.'
-    # data =  {
-    #                         'Id': {'DataType': 'Number', 'StringValue': str(1)},
-    #                         'Tweet': {'DataType': 'String', 'StringValue': str(a)},
-    #                         'Latitude': {'DataType': 'Number', 'StringValue': str(0)},
-    #                         'Longitude': {'DataType': 'Number', 'StringValue': str(0)}
-    #                     }
-    # b=queue.send_message(MessageBody="TweetInfo", MessageAttributes=data)
-    # print(b)
-    # a = 'starbucks is bad. android is bad. national geographic is bad. pets is bad. music is bad.'
-    # data =  {
-    #                         'Id': {'DataType': 'Number', 'StringValue': str(1)},
-    #                         'Tweet': {'DataType': 'String', 'StringValue': str(a)},
-    #                         'Latitude': {'DataType': 'Number', 'StringValue': str(0)},
-    #                         'Longitude': {'DataType': 'Number', 'StringValue': str(0)}
-    #                     }
-    # queue.send_message(MessageBody="TweetInfo", MessageAttributes=data)
-    # a = 'starbucks is neutral. android is neutral. national geographic is neutral. pets is neutral. music is neutral.'
-    # data =  {
-    #                         'Id': {'DataType': 'Number', 'StringValue': str(1)},
-    #                         'Tweet': {'DataType': 'String', 'StringValue': str(a)},
-    #                         'Latitude': {'DataType': 'Number', 'StringValue': str(0)},
-    #                         'Longitude': {'DataType': 'Number', 'StringValue': str(0)}
-    #                     }
-    # queue.send_message(MessageBody="TweetInfo", MessageAttributes=data)
+

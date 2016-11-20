@@ -42,13 +42,13 @@
                     },
                     success: function(response){
                         var new_tweets = response.new_tweets;
-                        $("#new_tweet_num").text(new_tweets.length);
+                        $("#new_tweet_num").text(parseInt($("#new_tweet_num").text())+new_tweets.length);
+			$.fn.poll_request();
                     },
                     error: function(error){
-                        alert(error);
                     },
                     complete: function(){
-                        $.fn.poll_request();
+                        //$.fn.poll_request();
                     }
                 })
             };
@@ -128,13 +128,13 @@
                             var iconImage;
                             if(locations[i][3]=="positive"){
                                 iconImage = pos_pinImage;
-                            }else if(locations[i][4]=="negative"){
+                            }else if(locations[i][3]=="negative"){
                                 iconImage = neg_pinImage;
                             }else{
                                 iconImage = neu_pinImage;
                             }
                             marker = new google.maps.Marker({
-                                position: {"lat": locations[i][1], "lng": locations[i][2]},
+                                position: {"lat": parseInt(locations[i][1]), "lng": parseInt(locations[i][2])},
                                 title: locations[i][0],
                                 icon: iconImage,
                                 map: map
@@ -232,13 +232,13 @@
                                 var iconImage;
                                 if(locations[i][3]=="positive"){
                                     iconImage = pos_pinImage;
-                                }else if(locations[i][4]=="negative"){
+                                }else if(locations[i][3]=="negative"){
                                     iconImage = neg_pinImage;
                                 }else{
                                     iconImage = neu_pinImage;
                                 }
                                 marker = new google.maps.Marker({
-                                    position: {"lat": locations[i][1], "lng": locations[i][2]},
+                                    position: {"lat": parseInt(locations[i][1]), "lng": parseInt(locations[i][2])},
                                     title: locations[i][0],
                                     icon: iconImage,
                                     map: map
@@ -247,7 +247,7 @@
 
                         },
                         error: function(xhr, status, error) {
-                          alert(xhr);
+                          alert(JSON.stringify(xhr));
                         },
                         complete: function () {
                             $("#loading_modal").modal("hide");
@@ -298,6 +298,12 @@
                 </button>
             </div>
         </div>
+        <div class="row">
+            <div class="col col-md-12">
+                <label> New Tweets: <span class="badge" id="new_tweet_num">0</span></label>
+            </div>
+        </div>
+
     </form>
     <br/>
     <div id="results_div" style="display: none;">
@@ -317,6 +323,7 @@
                 <label> Selected Point Latitude: <span id="selected_lat">N/A</span> ; Longitude <span id="selected_lon">N/A</span></label>
             </div>
         </div>
+	<br/>
         <div class="row">
             <div class="col col-md-3">
                 <button id="geo_query" class="btn btn-primary" disabled="disabled">
@@ -325,10 +332,14 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col col-md-12">
-            New Tweets: <span class="badge" id="new_tweet_num">0</span></a>
-        </div>
+    <br/>
+    <div>
+	<label> Legend </label>
+	<br/>
+	{% load static %}
+	<img src="{% static 'images/green.png' %}"/> <label> Positive sentiment </label>
+        <img src="{% static 'images/red.png' %}"/> <label> Negative sentiment </label>
+        <img src="{% static 'images/blue.png' %}"/> <label> Neutral sentiment </label>
     </div>
     <br/>
     <div id="map"></div>

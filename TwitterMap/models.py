@@ -140,7 +140,7 @@ class DjangoSession(models.Model):
 
 
 class NewTweets(models.Model):
-    id = models.CharField(max_length=255)
+    id = models.CharField(max_length=255, primary_key=True)
     tweet = models.CharField(max_length=255)
     lat = models.FloatField()
     lng = models.FloatField()

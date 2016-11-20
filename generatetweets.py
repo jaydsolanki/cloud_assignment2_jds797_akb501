@@ -62,3 +62,11 @@ if __name__ == '__main__':
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
     stream.filter(languages=['en'], track=['starbucks','android','national geographic','pets','music'])
+
+
+'''
+
+starbucks is good. android is good. national geographic is good. pets is good. music is good.
+starbucks is bad. android is bad. national geographic is bad. pets is bad. music is bad.
+starbucks is neutral. android is neutral. national geographic is neutral. pets is neutral. music is neutral.
+'''

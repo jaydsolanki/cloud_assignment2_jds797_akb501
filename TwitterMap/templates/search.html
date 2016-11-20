@@ -31,6 +31,8 @@
         window.new_tweet_num = 0;
         $(document).ready(function () {
             $("#new_tweet_num").text(0);
+
+            <!-- To get New Notifications-->
             $.fn.poll_request = function(){
                 $.ajax({
                     url: "/poll_data/",
@@ -52,6 +54,7 @@
             };
             setTimeout($.fn.poll_request, 500)
 
+
             $("#search_tweets_button").click(function () {
                 $("#loading_modal").modal("show");
                 $.ajax({
@@ -70,8 +73,23 @@
                         $("#selected_lat").text("N/A");
                         $("#selected_lon").text("N/A");
                         // Using custom PIN when user clicks on MAP
-                        var pinColor = "34BA46";
-                        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+                        var pos_pinColor = "339933";
+                        var neg_pinColor = "ff0000";
+                        var neu_pinColor = "0033cc";
+                        var user_pinColor = "6600cc";
+                        var pos_pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pos_pinColor,
+                                new google.maps.Size(21, 34),
+                                new google.maps.Point(0, 0),
+                                new google.maps.Point(10, 34));
+                        var neg_pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + neg_pinColor,
+                                new google.maps.Size(21, 34),
+                                new google.maps.Point(0, 0),
+                                new google.maps.Point(10, 34));
+                        var neu_pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + neu_pinColor,
+                                new google.maps.Size(21, 34),
+                                new google.maps.Point(0, 0),
+                                new google.maps.Point(10, 34));
+                        var user_pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + user_pinColor,
                                 new google.maps.Size(21, 34),
                                 new google.maps.Point(0, 0),
                                 new google.maps.Point(10, 34));
@@ -94,7 +112,7 @@
                             marker = new google.maps.Marker({
                                 position: e.latLng,
                                 title: "U",
-                                icon: pinImage,
+                                icon: user_pinImage,
                                 map: map
                             });
                             window.user_markers.push(marker);
@@ -107,17 +125,25 @@
                         $("#num_results_div").show();
                         $("#results_div").show();
                         for (i = 0; i < locations.length; i++) {
+                            var iconImage;
+                            if(locations[i][3]=="positive"){
+                                iconImage = pos_pinImage;
+                            }else if(locations[i][4]=="negative"){
+                                iconImage = neg_pinImage;
+                            }else{
+                                iconImage = neu_pinImage;
+                            }
                             marker = new google.maps.Marker({
                                 position: {"lat": locations[i][1], "lng": locations[i][2]},
                                 title: locations[i][0],
+                                icon: iconImage,
                                 map: map
                             });
                         }
 
                     },
                     error: function(xhr, status, error) {
-                          var err = eval("(" + xhr.responseText + ")");
-                          alert(err.Message);
+                          alert(xhr);
                     },
                     complete: function () {
                         $("#loading_modal").modal("hide");
@@ -150,15 +176,26 @@
                             $("#selected_lon").text("N/A");
 
                             // Using custom PIN when user clicks on MAP
-                            var pinColor = "34BA46";
-                            var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+                            var pos_pinColor = "339933";
+                            var neg_pinColor = "ff0000";
+                            var neu_pinColor = "0033cc";
+                            var user_pinColor = "6600cc";
+                            var pos_pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pos_pinColor,
                                     new google.maps.Size(21, 34),
                                     new google.maps.Point(0, 0),
                                     new google.maps.Point(10, 34));
-                            var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-                                    new google.maps.Size(40, 37),
+                            var neg_pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + neg_pinColor,
+                                    new google.maps.Size(21, 34),
                                     new google.maps.Point(0, 0),
-                                    new google.maps.Point(12, 35));
+                                    new google.maps.Point(10, 34));
+                            var neu_pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + neu_pinColor,
+                                    new google.maps.Size(21, 34),
+                                    new google.maps.Point(0, 0),
+                                    new google.maps.Point(10, 34));
+                            var user_pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + user_pinColor,
+                                    new google.maps.Size(21, 34),
+                                    new google.maps.Point(0, 0),
+                                    new google.maps.Point(10, 34));
 
                             var map = new google.maps.Map(document.getElementById('map'), {
                                 zoom: 2,
@@ -179,7 +216,7 @@
                                 marker = new google.maps.Marker({
                                     position: e.latLng,
                                     title: "U",
-                                    icon: pinImage,
+                                    icon: user_pinImage,
                                     map: map
                                 });
                                 window.user_markers.push(marker);
@@ -192,17 +229,25 @@
                             $("#num_results_div").show();
                             $("#results_div").show();
                             for (i = 0; i < locations.length; i++) {
+                                var iconImage;
+                                if(locations[i][3]=="positive"){
+                                    iconImage = pos_pinImage;
+                                }else if(locations[i][4]=="negative"){
+                                    iconImage = neg_pinImage;
+                                }else{
+                                    iconImage = neu_pinImage;
+                                }
                                 marker = new google.maps.Marker({
                                     position: {"lat": locations[i][1], "lng": locations[i][2]},
                                     title: locations[i][0],
+                                    icon: iconImage,
                                     map: map
                                 });
                             }
 
                         },
                         error: function(xhr, status, error) {
-                          var err = eval("(" + xhr.responseText + ")");
-                          alert(err.Message);
+                          alert(xhr);
                         },
                         complete: function () {
                             $("#loading_modal").modal("hide");

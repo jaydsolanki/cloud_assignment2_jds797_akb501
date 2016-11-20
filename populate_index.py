@@ -15,6 +15,9 @@ def populate_index(file_name, index_name, host=None):
                 "tweet": {
                     "type": "string"
                 },
+                "sentiment": {
+                    "type": "string"
+                },
                 "location": {
                     "type": "geo_point"
                 }

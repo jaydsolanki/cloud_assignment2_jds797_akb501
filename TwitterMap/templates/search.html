@@ -28,7 +28,30 @@
     <script>
         window.user_markers = [];
         window.current_latlng = null;
+        window.new_tweet_num = 0;
         $(document).ready(function () {
+            $("#new_tweet_num").text(0);
+            $.fn.poll_request = function(){
+                $.ajax({
+                    url: "/poll_data/",
+                    type: "post",
+                    data: {
+                        "csrfmiddlewaretoken" : $("[name='csrfmiddlewaretoken']").val()
+                    },
+                    success: function(response){
+                        var new_tweets = response.new_tweets;
+                        $("#new_tweet_num").text(new_tweets.length);
+                    },
+                    error: function(error){
+                        alert(error);
+                    },
+                    complete: function(){
+                        $.fn.poll_request();
+                    }
+                })
+            };
+            setTimeout($.fn.poll_request, 500)
+
             $("#search_tweets_button").click(function () {
                 $("#loading_modal").modal("show");
                 $.ajax({
@@ -52,11 +75,6 @@
                                 new google.maps.Size(21, 34),
                                 new google.maps.Point(0, 0),
                                 new google.maps.Point(10, 34));
-                        var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-                                new google.maps.Size(40, 37),
-                                new google.maps.Point(0, 0),
-                                new google.maps.Point(12, 35));
-
                         var map = new google.maps.Map(document.getElementById('map'), {
                             zoom: 2,
                             center: new google.maps.LatLng(35, 0),
@@ -260,6 +278,11 @@
                     GeoLocation Query
                 </button>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-md-12">
+            New Tweets: <span class="badge" id="new_tweet_num">0</span></a>
         </div>
     </div>
     <br/>

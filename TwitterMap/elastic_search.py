@@ -33,3 +33,10 @@ def search_tweets_geo(keyword, distance, lat, lng, index_name, host=None):
     return result
 
 
+def add_object_to_index(index_name, id, tweet, lat, lon, sentiment, host=None):
+    if not host:
+        es = Elasticsearch()
+    else:
+        es = Elasticsearch(host)
+    es.index(index=index_name, id=id, doc_type="tweet", body={"tweet": tweet, "location": {"lat": lat, "lon": lon}, "sentiment":sentiment})
+

@@ -1,7 +1,6 @@
-import boto3
 import multiprocessing
 import time
-import random
+# import random
 from alchemyapi import AlchemyAPI
 import boto3
 import json
@@ -13,6 +12,8 @@ alchemiapi = AlchemyAPI()
 # sudo pip3 install --upgrade watson-developer-cloud
 sentiment = ["positive","negative","neutral"]
 arn = 'arn:aws:sns:us-west-2:779752491908:sns_cloud'
+
+
 def worker_main(queue):
     while True:
         messages = queue.receive_messages(MessageAttributeNames=['Id', 'Tweet', 'Latitude', 'Longitude'])

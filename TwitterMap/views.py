@@ -69,6 +69,7 @@ def poll_data(request):
 
 @csrf_exempt
 def sns_handler(request):
+    print ("SOME THING PLEASE")
     if request.method=="GET":
         context = {"title":"Home"}
         return render(request, "index.html", context)
@@ -83,12 +84,13 @@ def sns_handler(request):
                 print("Subscribed to SNS")
             elif headers['Type']=="Notification":
                 print ("Received a new message: "+str(headers["Message"]))
-                message = json.loads(headers["Message"])
+                message = json.loads(json.loads(headers["Message"]).get('default'))
+                print ("Message :"+str(message))
                 id = message.get('id')
                 tweet = message.get('tweet')
                 lat = message.get("lat")
                 lng = message.get("lng")
-                sentiment = message.get("senti")
+                sentiment = message.get("sentiment")
                 index_name = getattr(settings, "INDEX_NAME", None)
                 host = getattr(settings, "HOST_NAME", None)
                 add_object_to_index(index_name, id, tweet, lat, lng, sentiment, host)

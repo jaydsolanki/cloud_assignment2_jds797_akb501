@@ -56,17 +56,35 @@ class StdOutListener(StreamListener):
 
 
 if __name__ == '__main__':
+    # pass
     # This handles Twitter authetification and the connection to Twitter Streaming API
     l = StdOutListener()
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
     stream.filter(languages=['en'], track=['starbucks','android','national geographic','pets','music'])
-
-
-'''
-
-starbucks is good. android is good. national geographic is good. pets is good. music is good.
-starbucks is bad. android is bad. national geographic is bad. pets is bad. music is bad.
-starbucks is neutral. android is neutral. national geographic is neutral. pets is neutral. music is neutral.
-'''
+    # a = 'starbucks is good. android is good. national geographic is good. pets is good. music is good.'
+    # data =  {
+    #                         'Id': {'DataType': 'Number', 'StringValue': str(1)},
+    #                         'Tweet': {'DataType': 'String', 'StringValue': str(a)},
+    #                         'Latitude': {'DataType': 'Number', 'StringValue': str(0)},
+    #                         'Longitude': {'DataType': 'Number', 'StringValue': str(0)}
+    #                     }
+    # b=queue.send_message(MessageBody="TweetInfo", MessageAttributes=data)
+    # print(b)
+    # a = 'starbucks is bad. android is bad. national geographic is bad. pets is bad. music is bad.'
+    # data =  {
+    #                         'Id': {'DataType': 'Number', 'StringValue': str(1)},
+    #                         'Tweet': {'DataType': 'String', 'StringValue': str(a)},
+    #                         'Latitude': {'DataType': 'Number', 'StringValue': str(0)},
+    #                         'Longitude': {'DataType': 'Number', 'StringValue': str(0)}
+    #                     }
+    # queue.send_message(MessageBody="TweetInfo", MessageAttributes=data)
+    # a = 'starbucks is neutral. android is neutral. national geographic is neutral. pets is neutral. music is neutral.'
+    # data =  {
+    #                         'Id': {'DataType': 'Number', 'StringValue': str(1)},
+    #                         'Tweet': {'DataType': 'String', 'StringValue': str(a)},
+    #                         'Latitude': {'DataType': 'Number', 'StringValue': str(0)},
+    #                         'Longitude': {'DataType': 'Number', 'StringValue': str(0)}
+    #                     }
+    # queue.send_message(MessageBody="TweetInfo", MessageAttributes=data)

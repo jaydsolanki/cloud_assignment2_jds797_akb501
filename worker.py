@@ -2,17 +2,17 @@ import boto3
 import multiprocessing
 import time
 import random
-# from alchemyapi import AlchemyAPI
+from alchemyapi import AlchemyAPI
 import boto3
 import json
 
 sqs = boto3.resource('sqs')
 sns = boto3.client('sns')
 queue = sqs.get_queue_by_name(QueueName='test')
-# alchemiapi = AlchemyAPI()
+alchemiapi = AlchemyAPI()
 # sudo pip3 install --upgrade watson-developer-cloud
 sentiment = ["positive","negative","neutral"]
-arn = ''
+arn = 'arn:aws:sns:us-west-2:779752491908:sns_cloud'
 def worker_main(queue):
     while True:
         messages = queue.receive_messages(MessageAttributeNames=['Id', 'Tweet', 'Latitude', 'Longitude'])
@@ -24,14 +24,16 @@ def worker_main(queue):
                     tweet = message.message_attributes.get('Tweet').get('StringValue')
                     lat = message.message_attributes.get('Latitude').get('StringValue')
                     lng = message.message_attributes.get('Longitude').get('StringValue')
-                    senti = sentiment[random.randint(0,2)]
-                    # try:
-                    #     respone = alchemiapi.sentiment('text',tweet)
-                    #     senti = response.get('docSentiment').get('type')
-                    # except:
-                    #     senti = "neutral"
+                    # senti = sentiment[random.randint(0,2)]
+                    try:
+                        response = alchemiapi.sentiment('text',tweet)
+                        senti = response.get('docSentiment').get('type')
+                    except Exception as e:
+                        print("ERROR: "+str(e))
+                        senti = "neutral"
                     # Using SNS
                     sns_message = {"id":id, "tweet":tweet, "lat":lat, "lng": lng, "sentiment":senti}
+                    print("SNS messsage: "+str(sns_message))
                     sns.publish(TargetArn=arn, Message=json.dumps({'default':json.dumps(sns_message)}))
                 # Print out the body and author (if set)
                 # print('Id: {0}; Tweet: {1}; Latitude: {2}; Longitude: {3}; sentiment: {4}'.format(id,tweet,lat,lng,senti))
@@ -42,7 +44,8 @@ def worker_main(queue):
 
 pool = multiprocessing.Pool(10, worker_main, (queue,))
 
-
+while True:
+    pass
 '''
 {
   "url": "https://gateway-a.watsonplatform.net/calls",

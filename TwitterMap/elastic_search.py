@@ -13,7 +13,8 @@ def search_tweets(keyword, index_name, host=None):
             tweet = record['_source']['tweet']
             lat = record['_source']['location']['lat']
             lon = record['_source']['location']['lon']
-            result.append([tweet, lat, lon])
+            sentiment = record['_source']['sentiment']
+            result.append([tweet, lat, lon, sentiment])
     return result
 
 
@@ -29,7 +30,8 @@ def search_tweets_geo(keyword, distance, lat, lng, index_name, host=None):
             tweet = record['_source']['tweet']
             lat = record['_source']['location']['lat']
             lon = record['_source']['location']['lon']
-            result.append([tweet, lat, lon])
+            sentiment = record['_source']['sentiment']
+            result.append([tweet, lat, lon, sentiment])
     return result
 
 

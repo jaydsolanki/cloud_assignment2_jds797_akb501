@@ -9,7 +9,7 @@ sqs = boto3.resource('sqs')
 sns = boto3.client('sns')
 queue = sqs.get_queue_by_name(QueueName='test')
 alchemiapi = AlchemyAPI()
-# sudo pip3 install --upgrade watson-developer-cloud
+# sudo pip install --upgrade watson-developer-cloud
 sentiment = ["positive","negative","neutral"]
 arn = 'arn:aws:sns:us-west-2:779752491908:sns_cloud'
 

@@ -57,6 +57,7 @@
 
             $("#search_tweets_button").click(function () {
                 $("#loading_modal").modal("show");
+                $("#new_tweet_num").text(0);
                 $.ajax({
                     url: "/search_query/",
                     type: "POST",
@@ -143,7 +144,7 @@
 
                     },
                     error: function(xhr, status, error) {
-                          alert(xhr);
+                        alert(JSON.stringify(xhr));
                     },
                     complete: function () {
                         $("#loading_modal").modal("hide");
@@ -156,6 +157,7 @@
                     alert("Please enter a distance!");
                 } else {
                     $("#loading_modal").modal("show");
+                    $("#new_tweet_num").text(0);
                     $.ajax({
                         url: "/geo_query/",
                         type: "POST",

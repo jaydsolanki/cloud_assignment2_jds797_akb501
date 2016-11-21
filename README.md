@@ -31,23 +31,21 @@
   6. Bootstrap
     * Get from `http://getbootstrap.com/`
   7. jQuery v1.x
-    * Get from `https://code.jquery.com/` by selection `jQuery 1.x`
+    * Get from `https://code.jquery.com/` by selecting `jQuery 1.x`
+  8. Alchemy
+    * Get from `http://www.alchemyapi.com/`
     
 <p> To get started with the application there are some steps to be followed </p>
   1. Download/Clone the project
   2. Run 
+     * `python manage.py makemigrations`
      * `python manage.py migrate`
-  3. Make sure you have stated ElasticSearch service at localhost or at AWS. If you run on AWS make sure to get the url for accessing the elastic search. Then run
-     * `python populate_index.py <index_name> <host for elasticsearch>`
-     <br/>
-     where replace `<index_name>` with the name of the index you want to create and 
-     replace `<host for elasticsearch>` with the Elastic Search Host url (pass an empty string ("") for localhost)
-     <br/>     
-     This may take a while and after that your Elasticsearch index will be created and populated
-     <br/>
+  3. Make sure you have stated ElasticSearch service at localhost or at AWS. If you run on AWS make sure to get the url for accessing the elastic search. Put that url into `generatetweets.py`. Then run
+     * `python generatetweets.py`
      Schema used for Elasticsearch: <br>
      `location: geo_point`<br/>
-     `tweet: string`
+     `tweet: string`<br/>
+     `sentiment: string`<br/>
   4. Open `Assignment1/settings.py` and change the variables `INDEX_NAME` and `HOST_NAME` as per your configuration
   5. To run it locally, run
      * `python manage.py runserver` <br/>
@@ -72,32 +70,27 @@
      
 ### Features
 
-<p>This project gives 2 search functionalities</p>
-  1. Search tweets for speicific keywords and visualize on a World Map
+<p>This project gives 3 functionalities</p>
+  1. Search tweets for speicific keywords and visualize on a World Map with their `positive`, `negative` or `neutral` sentiment with colors <span style="color: #339933;">green</span>, <span style="color: #ff0000;">red</span> and <span style="color: #0033cc;">blue</span> respectively.
   2. Click on Map to get a location and search tweets within 'N' KMs from that selected point using `geo_spatial` search
-  
+  3. It makes `asynchronous` calls using `ajax` and gets number of tweets received on the web page as soons as they are processed and pushed through SNS.
 ### Output
-##### Home Page
-![alt tag](https://github.com/jaydsolanki/cloud_assignment_jds797_akb501/blob/master/Screenshots/02_HomePage.png)
+##### Query Page with number of new notifications while user is browing through current tweets
+![alt tag](https://github.com/jaydsolanki/cloud_assignment2_jds797_akb501/blob/master/Screenshots/query.png)
 
 ##### AWS Elastic Search
-![alt tag](https://github.com/jaydsolanki/cloud_assignment_jds797_akb501/blob/master/Screenshots/01_elasticsearch_aws.png)
-
-##### Keyword Search Output
-![alt tag](https://github.com/jaydsolanki/cloud_assignment_jds797_akb501/blob/master/Screenshots/06_Query.png)
+![alt tag](https://github.com/jaydsolanki/cloud_assignment2_jds797_akb501/blob/master/Screenshots/elastic_search_domain.png)
 
 ##### GeoSearch Query
-<p> The green marker is what User Selected and the distance will be calculated from the green marker </p>
-![alt tag](https://github.com/jaydsolanki/cloud_assignment_jds797_akb501/blob/master/Screenshots/04_geo_search.png)
+<p> The purple marker is what User Selected and the distance will be calculated from the green marker </p>
+![alt tag](https://github.com/jaydsolanki/cloud_assignment2_jds797_akb501/blob/master/Screenshots/location_query.png)
     
-##### GeoSearch Query Output
-![alt tag](https://github.com/jaydsolanki/cloud_assignment_jds797_akb501/blob/master/Screenshots/05_geosearc_result.png)
+##### SQS
+![alt tag](https://github.com/jaydsolanki/cloud_assignment2_jds797_akb501/blob/master/Screenshots/sqs.png)
 
-##### EC2 instance for running Live Tweet input 
-![alt tag](https://github.com/jaydsolanki/cloud_assignment_jds797_akb501/blob/master/Screenshots/08_ec2_instance_for_live_data.png)
-
-##### Elastic Beanstalk used
-![alt tag](https://github.com/jaydsolanki/cloud_assignment_jds797_akb501/blob/master/Screenshots/07_elastic_beanstalk.png)
+##### SNS
+<p> The green marker is what User Selected and the distance will be calculated from the green marker </p>
+![alt tag](https://github.com/jaydsolanki/cloud_assignment2_jds797_akb501/blob/master/Screenshots/sns.png)
 
 <br>
 

@@ -46,6 +46,7 @@
      `location: geo_point`<br/>
      `tweet: string`<br/>
      `sentiment: string`<br/>
+     * Elastic Search URL: https://search-jds797-gr2rzisoplktc2g7orat65jfci.us-west-2.es.amazonaws.com
   4. Open `Assignment1/settings.py` and change the variables `INDEX_NAME` and `HOST_NAME` as per your configuration
   5. To run it locally, run
      * `python manage.py runserver` <br/>

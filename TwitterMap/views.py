@@ -55,16 +55,19 @@ def geo_query(request):
 
 def poll_data(request):
     while True:
-        data = NewTweets.objects.all()
-        if len(data)==0:
-            time.sleep(0.5)
-        else:
-            tweets = []
-            for d in data:
-                tweets.append({"id":d.id, "tweet": d.tweet, "lat": d.lat, "lng":d.lng, "sentiment": d.sentiment})
-            response = {"new_tweets": tweets}
-            NewTweets.objects.all().delete()
-            return HttpResponse(json.dumps(response), content_type="application/json", status=200)
+        try:
+            data = NewTweets.objects.all()
+            if len(data)==0:
+                time.sleep(0.5)
+            else:
+                tweets = []
+                for d in data:
+                    tweets.append({"id":d.id, "tweet": d.tweet, "lat": d.lat, "lng":d.lng, "sentiment": d.sentiment})
+                response = {"new_tweets": tweets}
+                NewTweets.objects.all().delete()
+                return HttpResponse(json.dumps(response), content_type="application/json", status=200)
+        except:
+            return HttpResponse(json.dumps({}), content_type="application/json", status=200)
 
 
 @csrf_exempt

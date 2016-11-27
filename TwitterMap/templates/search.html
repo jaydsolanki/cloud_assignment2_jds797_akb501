@@ -29,7 +29,7 @@
         window.user_markers = [];
         window.current_latlng = null;
         window.new_tweet_num = 0;
-        window.ajaxCalls = [];
+{#        window.ajaxCalls = [];#}
         $(document).ready(function () {
             $("#new_tweet_num").text(0);
             <!-- To get New Notifications-->
@@ -51,7 +51,7 @@
                         $.fn.poll_request();
                     }
                 });
-                window.ajaxCalls.push(ajaxCall);
+{#                window.ajaxCalls.push(ajaxCall);#}
             };
             setTimeout($.fn.poll_request, 500);
 
@@ -59,9 +59,9 @@
             $("#search_tweets_button").click(function () {
                 $("#loading_modal").modal("show");
                 $("#new_tweet_num").text(0);
-                for(var i=0;i<window.ajaxCalls.length; i++){
-                    window.ajaxCalls[i].abort();
-                }
+{#                for(var i=0;i<window.ajaxCalls.length; i++){#}
+{#                    window.ajaxCalls[i].abort();#}
+{#                }#}
 {#                window.ajaxCalls = [];#}
                 $.ajax({
                     url: "/search_query/",
@@ -161,10 +161,10 @@
                 if ($("#distance").val() == "") {
                     alert("Please enter a distance!");
                 } else {
-                    for(var i=0;i<window.ajaxCalls.length; i++){
-                        window.ajaxCalls[i].abort();
-                    }
-                    window.ajaxCalls = [];
+{#                    for(var i=0;i<window.ajaxCalls.length; i++){#}
+{#                        window.ajaxCalls[i].abort();#}
+{#                    }#}
+{#                    window.ajaxCalls = [];#}
                     $("#loading_modal").modal("show");
                     $("#new_tweet_num").text(0);
                     $.ajax({

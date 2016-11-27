@@ -18,7 +18,7 @@ access_token='95882254-XdfWIqxNfuleqNG968qGGAn4bssQW5aiuDhKUab2r'
 access_token_secret='zyPnWsNusGYZAFKKxTI6JzLVrjhkVn5xQGvnZbZRTsWKx'
 
 sqs = boto3.resource("sqs")
-queue = sqs.create_queue(QueueName='test', Attributes={"DelaySeconds":"5"})
+queue = sqs.create_queue(QueueName='tweet_queue', Attributes={"DelaySeconds":"5"})
 
 index_name = "twitter-index"
 mapping = {"mappings": {
@@ -88,4 +88,3 @@ if __name__ == '__main__':
     auth.set_access_token(access_token, access_token_secret)
     stream = Stream(auth, l)
     stream.filter(languages=['en'], track=['starbucks','android','national geographic','pets','music'])
-

@@ -7,7 +7,7 @@ import json
 
 sqs = boto3.resource('sqs')
 sns = boto3.client('sns')
-queue = sqs.get_queue_by_name(QueueName='test')
+queue = sqs.get_queue_by_name(QueueName='tweet_queue')
 alchemiapi = AlchemyAPI()
 # sudo pip install --upgrade watson-developer-cloud
 sentiment = ["positive","negative","neutral"]

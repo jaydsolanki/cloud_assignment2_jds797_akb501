@@ -29,12 +29,12 @@
         window.user_markers = [];
         window.current_latlng = null;
         window.new_tweet_num = 0;
+        window.ajaxCalls = [];
         $(document).ready(function () {
             $("#new_tweet_num").text(0);
-
             <!-- To get New Notifications-->
             $.fn.poll_request = function(){
-                $.ajax({
+                var ajaxCall = $.ajax({
                     url: "/poll_data/",
                     type: "post",
                     data: {
@@ -43,21 +43,26 @@
                     success: function(response){
                         var new_tweets = response.new_tweets;
                         $("#new_tweet_num").text(parseInt($("#new_tweet_num").text())+new_tweets.length);
-			$.fn.poll_request();
+{#			            $.fn.poll_request();#}
                     },
                     error: function(error){
                     },
                     complete: function(){
-                        //$.fn.poll_request();
+                        $.fn.poll_request();
                     }
-                })
+                });
+                window.ajaxCalls.push(ajaxCall);
             };
-            setTimeout($.fn.poll_request, 500)
+            setTimeout($.fn.poll_request, 500);
 
 
             $("#search_tweets_button").click(function () {
                 $("#loading_modal").modal("show");
                 $("#new_tweet_num").text(0);
+                for(var i=0;i<window.ajaxCalls.length; i++){
+                    window.ajaxCalls[i].abort();
+                }
+                window.ajaxCalls = [];
                 $.ajax({
                     url: "/search_query/",
                     type: "POST",
@@ -156,6 +161,10 @@
                 if ($("#distance").val() == "") {
                     alert("Please enter a distance!");
                 } else {
+                    for(var i=0;i<window.ajaxCalls.length; i++){
+                        window.ajaxCalls[i].abort();
+                    }
+                    window.ajaxCalls = [];
                     $("#loading_modal").modal("show");
                     $("#new_tweet_num").text(0);
                     $.ajax({

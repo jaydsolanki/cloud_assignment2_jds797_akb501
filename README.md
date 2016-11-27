@@ -40,15 +40,16 @@
   2. Run 
      * `python manage.py makemigrations`
      * `python manage.py migrate`
-  3. Make sure you have stated ElasticSearch service at localhost or at AWS. If you run on AWS make sure to get the url for accessing the elastic search. Put that url into `generatetweets.py`. Then run
+  3. Make sure you have stated ElasticSearch service at localhost or at AWS. If you run on AWS make sure to get the url for accessing the elastic search. Put that url into `generatetweets.py`. Install boto3 and configure aws with your access token and secret access token for `SQS`. Then run
      * `python generatetweets.py`
      Schema used for Elasticsearch: <br>
      `location: geo_point`<br/>
      `tweet: string`<br/>
      `sentiment: string`<br/>
      * Elastic Search URL: https://search-jds797-gr2rzisoplktc2g7orat65jfci.us-west-2.es.amazonaws.com
-  4. Open `Assignment1/settings.py` and change the variables `INDEX_NAME` and `HOST_NAME` as per your configuration
-  5. To run it locally, run
+  4. Place alchemyapi and key file. Run worker.py by `python worker.py` for `SNS` 
+  5. Open `Assignment1/settings.py` and change the variables `INDEX_NAME` and `HOST_NAME` as per your configuration
+     To run it locally, run
      * `python manage.py runserver` <br/>
      The web appication will be accesible from `localhost:8000`
      <br> To run on ElasticBeanstalk make sure you have installed EB cli. Follow the steps from `http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html#python-django-deploy`.

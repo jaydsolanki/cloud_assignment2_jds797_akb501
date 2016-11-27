@@ -3,7 +3,7 @@ branch-defaults:
     environment: null
     group_suffix: null
   master:
-    environment: null
+    environment: django-env
 global:
   application_name: cloud-assignment
   branch: null

@@ -148,8 +148,8 @@
                         }
 
                     },
-                    error: function(xhr, status, error) {
-                        alert(JSON.stringify(xhr));
+                    error: function(response) {
+                        console.log("Error");
                     },
                     complete: function () {
                         $("#loading_modal").modal("hide");
@@ -257,8 +257,8 @@
                             }
 
                         },
-                        error: function(xhr, status, error) {
-                          alert(JSON.stringify(xhr));
+                        error: function(response) {
+                          console.log("ERROR");
                         },
                         complete: function () {
                             $("#loading_modal").modal("hide");

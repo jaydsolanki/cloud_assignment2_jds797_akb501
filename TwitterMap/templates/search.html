@@ -62,7 +62,7 @@
                 for(var i=0;i<window.ajaxCalls.length; i++){
                     window.ajaxCalls[i].abort();
                 }
-                window.ajaxCalls = [];
+{#                window.ajaxCalls = [];#}
                 $.ajax({
                     url: "/search_query/",
                     type: "POST",
